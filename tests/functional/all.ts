@@ -1,1 +1,1 @@
-import './main';
+/* import your tests here */

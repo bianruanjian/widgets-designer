@@ -1,10 +1,10 @@
 import { ProjectorMixin } from '@dojo/widget-core/mixins/Projector';
-import HelloWorld from './widgets/HelloWorld';
+import Example from './widgets/Example';
 
 // Create a projector to convert the virtual DOM produced by the application into the rendered page.
 // For more information on starting up a Dojo 2 application, take a look at
 // https://dojo.io/tutorials/002_creating_an_application/
-const Projector = ProjectorMixin(HelloWorld);
+const Projector = ProjectorMixin(Example);
 const projector = new Projector();
 
 // By default, append() will attach the rendered content to document.body.  To insert this application
