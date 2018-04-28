@@ -6,7 +6,7 @@ import * as css from './styles/Button.m.css';
 import { VNode } from '@dojo/widget-core/interfaces';
 
 export default class Button extends EditableWidgetBase {
-	render() : VNode{
+	render(): VNode{
 		const { widget, activeWidgetId, onFocus } = this.properties;
 
 		this.tryFocus(widget, activeWidgetId, onFocus);

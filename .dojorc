@@ -1,0 +1,12 @@
+"build-widget": {
+		"elements": [
+			"src/widget/button",
+			"src/widget/container",
+			"src/widget/grid-column",
+			"src/widget/grid-row",
+			"src/widget/image",
+			"src/widget/text",
+			"src/widget/container",
+			"src/widget/view"
+		]
+	}
