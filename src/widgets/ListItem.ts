@@ -2,8 +2,8 @@ import { v } from '@dojo/widget-core/d';
 import { VNode } from '@dojo/widget-core/interfaces';
 import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
 import { FlexContainerProperties } from 'widgets-web/common/interfaces';
-import { getFlexContainerClasses, getDisplayClass, getTextClasses, getTextDecorationClass, getColorsClasses, getTextStyles } from './util';
-import { DisplayProperties, TextProperties, ColorsProperties } from './interfaces';
+import { getFlexContainerClasses, getDisplayClass, getTextClasses, getTextDecorationClass, getColorsClasses, getTextStyles } from 'widgets-web/common/util';
+import { DisplayProperties, TextProperties, ColorsProperties } from 'widgets-web/common/interfaces';
 import * as baseCss from './styles/base.m.css';
 
 export class ListItem extends EditableWidgetBase {

@@ -5,6 +5,7 @@ import harness from '@dojo/test-extras/harness';
 import Addon from './../widgets/Addon';
 import { Addon as addon, AddonProperties } from 'widgets-web/addon/index';
 import { EditableWidgetProperties } from 'widget-core-designer/interfaces';
+import * as baseCss from './../widgets/styles/base.m.css';
 
 describe('Addon', () => {
     it('should construct Addon', () => {
@@ -15,7 +16,7 @@ describe('Addon', () => {
 				'div',
 				{
 					key: 'root',
-					classes: [],
+					classes: [baseCss.emptyContainer],
 					onmouseup: () => {}
 				},
 					[w(addon , {

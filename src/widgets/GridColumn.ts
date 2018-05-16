@@ -2,8 +2,8 @@ import { v } from '@dojo/widget-core/d';
 import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
 import * as baseCss from './styles/base.m.css';
 import { VNode } from '@dojo/widget-core/interfaces';
-import { BorderProperties, SpacingProperties, TextProperties, FlexContainerProperties, FlexItemProperties, DisplayProperties } from './interfaces';
-import { getBorderClasses, getSpacingClasses, getTextClasses, getFlexContainerClasses, getFlexItemClasses, getTextStyles, getTextDecorationClass, getDisplayClass } from './util';
+import { BorderProperties, SpacingProperties, TextProperties, FlexContainerProperties, FlexItemProperties, DisplayProperties } from 'widgets-web/common/interfaces';
+import { getBorderClasses, getSpacingClasses, getTextClasses, getFlexContainerClasses, getFlexItemClasses, getTextStyles, getTextDecorationClass, getDisplayClass } from 'widgets-web/common/util';
 
 
 export class GridColumn extends EditableWidgetBase {

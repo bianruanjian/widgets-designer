@@ -1,10 +1,9 @@
 import { v, w } from '@dojo/widget-core/d';
 import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
 import { VNode, DNode } from '@dojo/widget-core/interfaces';
-import { formSizeMap, getFlexItemClasses, getSpacingClasses, getDisplayClass, getFloatClass, renderMessageNode } from './util';
-import { FlexItemProperties, SpacingProperties } from 'widgets-web/common/interfaces';
+import { formSizeMap, getFlexItemClasses, getSpacingClasses, getDisplayClass, getFloatClass, renderMessageNode } from 'widgets-web/common/util';
+import { FlexItemProperties, SpacingProperties, DisplayProperties, FloatProperties, MessageProperties } from 'widgets-web/common/interfaces';
 import { Label } from 'widgets-web/label';
-import { DisplayProperties, FloatProperties, MessageProperties } from './interfaces';
 
 export class TextInput extends EditableWidgetBase {
 	protected renderInput(): VNode {

@@ -1,7 +1,7 @@
 import { DNode } from '@dojo/widget-core/interfaces';
 import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
-import { formSizeMap, getFlexItemClasses, getSpacingClasses, getDisplayClass, getFloatClass, renderMessageNode } from './util';
-import { FlexItemProperties, SpacingProperties, FloatProperties } from './interfaces';
+import { formSizeMap, getFlexItemClasses, getSpacingClasses, getDisplayClass, getFloatClass, renderMessageNode } from 'widgets-web/common/util';
+import { FlexItemProperties, SpacingProperties, FloatProperties } from 'widgets-web/common/interfaces';
 import { DisplayProperties, MessageProperties } from 'widgets-web/common/interfaces';
 import { Label } from 'widgets-web/label';
 import { w, v } from '@dojo/widget-core/d';
