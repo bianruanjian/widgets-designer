@@ -1,7 +1,7 @@
 // import WidgetBase from '@dojo/widget-core/WidgetBase';
 import { v,w } from '@dojo/widget-core/d';
-import EditableWidgetBase from 'brj-widget-core/EditableWidgetBase'; 
-import { EditableWidgetProperties } from 'brj-widget-core/interfaces';
+import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase'; 
+import { EditableWidgetProperties } from 'widget-core-designer/interfaces';
 import { VNode } from '@dojo/widget-core/interfaces';
 
 import Button from './Button';

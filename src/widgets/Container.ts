@@ -1,33 +1,24 @@
-import { v } from '@dojo/widget-core/d';
-import EditableWidgetBase from 'brj-widget-core/EditableWidgetBase';
+import { v, w } from '@dojo/widget-core/d';
 
-import * as baseCss from './styles/base.m.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
 import { VNode } from '@dojo/widget-core/interfaces';
+import { ContainerBase as container } from 'widgets-web/Container/index';
+import * as baseCss from './styles/base.m.css';
 
-export class Container extends EditableWidgetBase {
-	protected render() :VNode {
-		const { widget, activeWidgetId, onFocus } = this.properties;
+export default class Container extends EditableWidgetBase {
+    protected render() : VNode {
+        const { widget, activeWidgetId, onFocus } = this.properties;
 
-		this.tryFocus(widget, activeWidgetId, onFocus);
+        this.tryFocus(widget, activeWidgetId, onFocus);
+        
+        const hasChildren = this.children.length > 0;
 
-		const { properties: { fluidWidth } } = widget;
-
-		const isFluidWidth = fluidWidth === 'true';
-
-		const cssClass = isFluidWidth ? 'container-fluid' : 'container';
-
-		const hasChildren = this.children.length > 0;
-		return v(
-			'div',
-			{
-				key: this.rootKey,
-				classes: [cssClass, hasChildren ? null : baseCss.emptyContainer],
-				onmouseup: this.onMouseUp
-			},
-			this.children
-		);
-	}
+        return v('div',{
+            key:this.rootKey,
+            classes: hasChildren ? [] : [baseCss.emptyContainer],
+            onmouseup: this.onMouseUp
+        },[
+            w(container, widget.properties, this.children)
+        ]);
+    }
 }
-
-export default Container;

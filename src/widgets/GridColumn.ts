@@ -1,15 +1,14 @@
 import { v } from '@dojo/widget-core/d';
-import EditableWidgetBase from 'brj-widget-core/EditableWidgetBase';
+import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
 import * as baseCss from './styles/base.m.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { VNode } from '@dojo/widget-core/interfaces';
-import { BorderProperties, SpacingProperties, TextProperties, FlexContainerProperties, FlexItemProperties } from './interfaces';
-import { getBorderClasses, getSpacingClasses, getTextClasses, getFlexContainerClasses, getFlexItemClasses, getTextStyles, getTextDecorationClass } from './util';
+import { BorderProperties, SpacingProperties, TextProperties, FlexContainerProperties, FlexItemProperties, DisplayProperties } from './interfaces';
+import { getBorderClasses, getSpacingClasses, getTextClasses, getFlexContainerClasses, getFlexItemClasses, getTextStyles, getTextDecorationClass, getDisplayClass } from './util';
 
 
 export class GridColumn extends EditableWidgetBase {
 
-    private _getSelfClasses(): string[] {
+    private _getClasses(): string[] {
 		let {
             widget: {
 				properties: {
@@ -44,9 +43,11 @@ export class GridColumn extends EditableWidgetBase {
 		} = widget.properties;
 
 		let flexContainerClasses: string[] = [];
+		let flexItemClasses: string[] = [];
 
-		if(display==="flex"||display==="inlineFlex"){
+		if(display && (display === 'flex' || display === 'inlineFlex')){
 			flexContainerClasses = getFlexContainerClasses(widget.properties as FlexContainerProperties);
+			flexItemClasses = getFlexItemClasses(widget.properties as FlexItemProperties);
 		}
 		return v(
 			'div',
@@ -54,12 +55,13 @@ export class GridColumn extends EditableWidgetBase {
 				key: this.rootKey,
 				id: widgetId,
 				classes: [
-					...this._getSelfClasses(),
+					...this._getClasses(),
 					...getBorderClasses(widget.properties as BorderProperties),
 					...getSpacingClasses(widget.properties as SpacingProperties),
 					...getTextClasses(widget.properties as TextProperties),
+					display ? getDisplayClass(widget.properties as DisplayProperties) : '',
 					...flexContainerClasses,
-					...getFlexItemClasses(widget.properties as FlexItemProperties),
+					...flexItemClasses,
                     ...getTextDecorationClass(widget.properties as TextProperties),
                     hasChildren ? null : baseCss.emptyContainer
 				],

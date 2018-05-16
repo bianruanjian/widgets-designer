@@ -1,55 +1,22 @@
-import EditableWidgetBase from 'brj-widget-core/EditableWidgetBase';
-import { v } from '@dojo/widget-core/d';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
+import { v, w } from '@dojo/widget-core/d';
 import { VNode } from '@dojo/widget-core/interfaces';
-
-import { SpacingProperties, TextProperties, ColorsProperties } from './interfaces';
-import { getSpacingClasses, getTextClasses, getTextDecorationClass, getColorsClasses, getTextStyles } from './util';
+import { Text as text } from 'widgets-web/text';
+import * as baseCss from './styles/base.m.css';
 
 export class Text extends EditableWidgetBase {
 	protected render() : VNode {
 		const { widget, activeWidgetId, onFocus } = this.properties;
 		this.tryFocus(widget, activeWidgetId, onFocus);
+        const hasChildren = this.children.length > 0;
 
-		let {
-			widgetId,
-			value,
-			type
-		} = widget.properties;
-
-		let tag: string;
-		let cssClasses: string[] = [];
-
-		if(!type){
-			tag = 'span';
-		}else if(type === 'text'){
-			tag = 'span';
-		}else if(type === 'lead'){
-			tag = 'p';
-			cssClasses.push('lead');
-		}else{
-			tag = type as string;
-		}
-
-		return v(
-			tag,
-			{
-				key: this.rootKey,
-				id: widgetId,
-				classes: [
-					...cssClasses,
-					...getSpacingClasses(widget.properties as SpacingProperties),
-					...getTextClasses(widget.properties as TextProperties),
-					...getTextDecorationClass(widget.properties as TextProperties),
-					...getColorsClasses(widget.properties as ColorsProperties)
-				],
-				styles: {
-					...getTextStyles(widget.properties as TextProperties)
-				},
-				onmouseup: this.onMouseUp
-			},
-			value ? [...this.children,...[value]] : this.children
-		);
+		return v('span',{
+            key:this.rootKey,
+            classes: hasChildren ? [] : [baseCss.emptyContainer],
+            onmouseup: this.onMouseUp
+        },[
+            w(text, widget.properties, this.children)
+        ]);
 	}
 }
 

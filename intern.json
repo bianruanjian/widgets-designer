@@ -1,0 +1,14 @@
+{
+
+	"environments": [
+		{ "browserName": "node" }
+	],
+
+	"suites": [
+		"./_build/tests/Addon.js"
+	],
+
+	"functionalSuites": [
+    ]
+    
+}

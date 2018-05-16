@@ -1,24 +1,17 @@
 import { v } from '@dojo/widget-core/d';
 
-import EditableWidgetBase from 'brj-widget-core/EditableWidgetBase';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
 import * as css from './styles/Button.m.css';
 import { VNode } from '@dojo/widget-core/interfaces';
-
-export default class Button extends EditableWidgetBase {
-	render(): VNode{
+import { sizeMap } from 'widgets-web/button/index';
+ 
+export default class Button extends EditableWidgetBase { 
+	protected render() : VNode {
 		const { widget, activeWidgetId, onFocus } = this.properties;
 
 		this.tryFocus(widget, activeWidgetId, onFocus);
 
-		const { 
-			value, 
-			appearance, 
-			size, 
-			disabled,
-			type,
-			fluidWidth,
-			active } = widget.properties;
+		const { value, appearance, size, disabled, fluid, active, type, isListItem } = widget.properties;
 
 		if (this.children.length === 0) {
 			this.children.push(value || '按钮');
@@ -34,16 +27,24 @@ export default class Button extends EditableWidgetBase {
 			'div',
 			{
 				key: this.rootKey,
-				classes: [
-					'btn',
-					css.root,
-					appearance !== '' ? `btn-${appearance}`: undefined,
-					size !== '' ? `btn-${size}` : undefined,
-					fluidWidth ? 'btn-block' : undefined,
-					active ? 'active' : undefined
-				],
-				disabled: disabled,
-				type: type,
+				classes: isListItem
+                    ? [
+                        css.root,
+                        'list-group-item',
+                        'list-group-item-action',
+                        appearance && appearance !== 'default' ? `list-group-item-${appearance}` : undefined,
+                        active === true || active === 'true' ? 'active' : undefined
+                    ]
+                    : [
+                        'btn',
+                        css.root,
+                        appearance ? `btn-${appearance}`: undefined,
+                        size ? sizeMap[size as string] : undefined,
+                        fluid ? 'btn-block' : undefined,
+                        active ? 'active' : undefined
+                    ],
+                disabled: disabled === true || disabled === 'true',
+                type,
 				onmouseup: this.onMouseUp
 			},
 			this.children
