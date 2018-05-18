@@ -1,0 +1,30 @@
+{
+	"build-app": {},
+	"test-intern": {},
+	"create-app": {},
+	"build-widget": {
+		"elements": [
+			"src/widget/button",
+			"src/widget/container",
+			"src/widget/grid-column",
+			"src/widget/grid-row",
+			"src/widget/image",
+			"src/widget/text",
+			"src/widget/view",
+			"src/widget/addon",
+			"src/widget/badge",
+			"src/widget/card",
+			"src/widget/checkbox",
+			"src/widget/footer",
+			"src/widget/icon",
+			"src/widget/input-group",
+			"src/widget/link",
+			"src/widget/list-group",
+			"src/widget/list-item",
+			"src/widget/radio",
+			"src/widget/select",
+			"src/widget/textarea",
+			"src/widget/text-input"
+		]
+	}
+}
