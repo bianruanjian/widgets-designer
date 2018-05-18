@@ -11,24 +11,23 @@ describe('Button', () => {
         const prop : EditableWidgetProperties = {widget:{id:'1',widgetId:1,widgetName:'1',parentId:'root',properties:{widgetId:'1',value:'a', id: '1'}}, onFocus:function(){}, activeWidgetId:'1'};
 		const h = harness(() => w(Button, prop));
 		h.expect(() =>
-			v(
-				'div',
-				{
-					key: 'root',
-					classes: [
-						'btn',
-						css.root,
-						undefined,
-						undefined,
-						undefined,
-						undefined
-					],
-					disabled: false,
-					type: undefined,
-					onmouseup: () => {}
-				},
-				['a']
-			)
+		 [v('div', {
+			         classes: [
+			                         'btn',
+			                         css.root,
+			                         'undefined',
+			                         'undefined',
+			                         'undefined',
+			                         'undefined'
+			         ],
+			         disabled: false,
+			         key: 'button',
+			         onmouseup: () => {},
+			         type: undefined
+			 }, [
+			         'a'
+			 ])
+			]
 		);
 	});
 });

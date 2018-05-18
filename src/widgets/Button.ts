@@ -1,15 +1,12 @@
 import { v } from '@dojo/widget-core/d';
-
-import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
+import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import * as css from './styles/Button.m.css';
 import { VNode } from '@dojo/widget-core/interfaces';
-import { sizeMap } from 'widgets-web/button/index';
+import WebButton, { sizeMap } from 'widgets-web/button/index';
  
-export default class Button extends EditableWidgetBase { 
+export default class Button extends DesignerWidgetMixin(WebButton){ 
 	protected render() : VNode {
-		const { widget, activeWidgetId, onFocus } = this.properties;
-
-		this.tryFocus(widget, activeWidgetId, onFocus);
+		const { widget } = this.properties;
 
 		const { value, appearance, size, disabled, fluid, active, type, isListItem } = widget.properties;
 
@@ -26,7 +23,7 @@ export default class Button extends EditableWidgetBase {
 			// 而使用 div 则可以解决上述两个问题，并且也可以看到相同的按钮样式。
 			'div',
 			{
-				key: this.rootKey,
+				key: 'button',
 				classes: isListItem
                     ? [
                         css.root,
@@ -44,8 +41,7 @@ export default class Button extends EditableWidgetBase {
                         active ? 'active' : undefined
                     ],
                 disabled: disabled === true || disabled === 'true',
-                type,
-				onmouseup: this.onMouseUp
+                type
 			},
 			this.children
 		);

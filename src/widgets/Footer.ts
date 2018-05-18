@@ -1,24 +1,7 @@
-import { v, w } from '@dojo/widget-core/d';
-
-import EditableWidgetBase from 'widget-core-designer/EditableWidgetBase';
-import { VNode } from '@dojo/widget-core/interfaces';
-import { Footer as footer } from 'widgets-web/footer/index';
-import * as baseCss from './styles/base.m.css';
-
-export default class Footer extends EditableWidgetBase {
-    protected render() : VNode {
-        const { widget, activeWidgetId, onFocus } = this.properties;
-
-        this.tryFocus(widget, activeWidgetId, onFocus);
-        
-        const hasChildren = this.children.length > 0;
-
-        return v('div',{
-            key:this.rootKey,
-            classes: hasChildren ? [] : [baseCss.emptyContainer],
-            onmouseup: this.onMouseUp
-        },[
-            w(footer, widget.properties, this.children)
-        ]);
-    }
+import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
+import WebFooter from 'widgets-web/footer';
+export default class Footer extends DesignerWidgetMixin(WebFooter) {
+    protected isContainer(){
+        return true;
+     }
 }
