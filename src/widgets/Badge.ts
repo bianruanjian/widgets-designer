@@ -1,4 +1,4 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
-import WebBadge from 'widgets-web/badge';
+import { BadgeBase } from 'widgets-web/badge';
 
-export default class Badge extends DesignerWidgetMixin(WebBadge) {}
+export default class Badge extends DesignerWidgetMixin(BadgeBase) {}

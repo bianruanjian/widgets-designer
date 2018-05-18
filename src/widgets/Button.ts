@@ -2,10 +2,10 @@ import { v } from '@dojo/widget-core/d';
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import * as css from './styles/Button.m.css';
 import { VNode } from '@dojo/widget-core/interfaces';
-import WebButton, { sizeMap } from 'widgets-web/button/index';
- 
-export default class Button extends DesignerWidgetMixin(WebButton){ 
-	protected render() : VNode {
+import { ButtonBase, sizeMap } from 'widgets-web/button/index';
+
+export default class Button extends DesignerWidgetMixin(ButtonBase) {
+	protected render(): VNode {
 		const { widget } = this.properties;
 
 		const { value, appearance, size, disabled, fluid, active, type, isListItem } = widget.properties;
@@ -25,23 +25,23 @@ export default class Button extends DesignerWidgetMixin(WebButton){
 			{
 				key: 'button',
 				classes: isListItem
-                    ? [
-                        css.root,
-                        'list-group-item',
-                        'list-group-item-action',
-                        appearance && appearance !== 'default' ? `list-group-item-${appearance}` : undefined,
-                        active === true || active === 'true' ? 'active' : undefined
-                    ]
-                    : [
-                        'btn',
-                        css.root,
-                        appearance ? `btn-${appearance}`: undefined,
-                        size ? sizeMap[size as string] : undefined,
-                        fluid ? 'btn-block' : undefined,
-                        active ? 'active' : undefined
-                    ],
-                disabled: disabled === true || disabled === 'true',
-                type
+					? [
+							css.root,
+							'list-group-item',
+							'list-group-item-action',
+							appearance && appearance !== 'default' ? `list-group-item-${appearance}` : undefined,
+							active === true || active === 'true' ? 'active' : undefined
+						]
+					: [
+							'btn',
+							css.root,
+							appearance ? `btn-${appearance}` : undefined,
+							size ? sizeMap[size as string] : undefined,
+							fluid ? 'btn-block' : undefined,
+							active ? 'active' : undefined
+						],
+				disabled: disabled === true || disabled === 'true',
+				type
 			},
 			this.children
 		);

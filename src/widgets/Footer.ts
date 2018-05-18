@@ -1,7 +1,7 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
-import WebFooter from 'widgets-web/footer';
-export default class Footer extends DesignerWidgetMixin(WebFooter) {
-    protected isContainer(){
-        return true;
-     }
+import { FooterBase } from 'widgets-web/footer';
+export default class Footer extends DesignerWidgetMixin(FooterBase) {
+	protected isContainer() {
+		return true;
+	}
 }
