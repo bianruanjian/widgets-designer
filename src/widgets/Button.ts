@@ -37,8 +37,8 @@ export default class Button extends DesignerWidgetMixin(ButtonBase) {
 							css.root,
 							appearance ? `btn-${appearance}` : undefined,
 							size ? sizeMap[size as string] : undefined,
-							fluid ? 'btn-block' : undefined,
-							active ? 'active' : undefined
+							fluid === true || fluid === 'true' ? 'btn-block' : undefined,
+							active === true || active === 'true' ? 'active' : undefined
 						],
 				disabled: disabled === true || disabled === 'true',
 				type
