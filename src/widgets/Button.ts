@@ -25,7 +25,7 @@ export default class Button extends DesignerWidgetMixin(ButtonBase) {
 				),
 				...this.children
 			];
-		} else if (value && valuePosition && valuePosition === 'top') {
+		} else if (value && valuePosition && valuePosition === 'bottom') {
 			children = [
 				...this.children,
 				v(
