@@ -1,7 +1,6 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { LinkBase } from 'widgets-web/link';
 import { VNode, DNode } from '@dojo/widget-core/interfaces';
-import { targetMap } from 'widgets-web/button';
 import { v } from '@dojo/widget-core/d';
 import {
 	FlexItemProperties,
@@ -20,19 +19,10 @@ import {
 	getTextStyles
 } from 'widgets-web/common/util';
 export default class Link extends DesignerWidgetMixin(LinkBase) {
-	private _onClick(event: MouseEvent) {
-		event.preventDefault();
-		return false;
-	}
-
 	protected render(): VNode {
 		const { widget } = this.properties;
 
-		let { href, target, value, valuePosition, isListItem = false, appearance, display } = widget.properties;
-
-		if (target) {
-			target = targetMap[target as string] || target;
-		}
+		let { value, valuePosition, isListItem = false, appearance, display } = widget.properties;
 
 		let flexItemClasses: string[] = [];
 
@@ -48,12 +38,13 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 			children = [...this.children, value];
 		}
 
+		// 这里没有使用 a 标签，因为
+		// 如果使用 a 按钮，则需要在上面添加遮盖层，以屏蔽默认事件，但这样就无法选中子节点了
+		// a -> span
 		return v(
-			'a',
+			'span',
 			{
 				key: 'link',
-				href,
-				target,
 				classes: isListItem
 					? [
 							'list-group-item',
@@ -73,8 +64,12 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 							...getColorsClasses(widget.properties as ColorsProperties),
 							...getTextDecorationClass(widget.properties as TextProperties)
 						],
-				styles: getTextStyles(widget.properties as TextProperties),
-				onclick: this._onClick
+				styles: {
+					color: '#007bff',
+					textDecoration: 'underline',
+					backgroundColor: 'transparent',
+					...getTextStyles(widget.properties as TextProperties)
+				}
 			},
 			children
 		);
