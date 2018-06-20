@@ -8,37 +8,9 @@ export default class Button extends DesignerWidgetMixin(ButtonBase) {
 	protected render(): VNode {
 		const { widget } = this.properties;
 
-		const { value, valuePosition, appearance, size, disabled, fluid, active, type, isListItem } = widget.properties;
+		const { appearance, size, disabled, fluid, active, type, isListItem } = widget.properties;
 
-		let children: DNode[];
-
-		if (value && valuePosition && valuePosition === 'left') {
-			children = [value, ...this.children];
-		} else if (value && valuePosition && valuePosition === 'top') {
-			children = [
-				v(
-					'span',
-					{
-						classes: ['d-block']
-					},
-					[value]
-				),
-				...this.children
-			];
-		} else if (value && valuePosition && valuePosition === 'bottom') {
-			children = [
-				...this.children,
-				v(
-					'span',
-					{
-						classes: ['d-block']
-					},
-					[value]
-				)
-			];
-		} else {
-			children = [...this.children, value];
-		}
+		const children: DNode[] = this.renderChildren();
 
 		// 需要添加遮盖层的部件是明确的，因此这里不需要传入是否显示遮盖层的参数。
 		return v(
