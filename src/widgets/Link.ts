@@ -22,14 +22,12 @@ import * as css from './styles/Link.m.css';
 
 export default class Link extends DesignerWidgetMixin(LinkBase) {
 	protected render(): VNode {
-		const { widget } = this.properties;
-
-		let { value, valuePosition, isListItem = false, appearance, display } = widget.properties;
+		let { value, valuePosition, isListItem = false, appearance, display } = this.properties;
 
 		let flexItemClasses: string[] = [];
 
 		if (display && (display === 'flex' || display === 'inlineFlex')) {
-			flexItemClasses = getFlexItemClasses(widget.properties as FlexItemProperties);
+			flexItemClasses = getFlexItemClasses(this.properties as FlexItemProperties);
 		}
 
 		let children: DNode[];
@@ -52,23 +50,23 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 							'list-group-item',
 							'list-group-item-action',
 							css.root,
-							...getSpacingClasses(widget.properties as SpacingProperties),
-							display ? getDisplayClass(widget.properties as DisplayProperties) : undefined,
+							...getSpacingClasses(this.properties as SpacingProperties),
+							display ? getDisplayClass(this.properties as DisplayProperties) : undefined,
 							...flexItemClasses,
-							...getTextClasses(widget.properties as TextProperties),
+							...getTextClasses(this.properties as TextProperties),
 							appearance && appearance !== 'default' ? `list-group-item-${appearance}` : undefined,
-							...getTextDecorationClass(widget.properties as TextProperties)
+							...getTextDecorationClass(this.properties as TextProperties)
 						]
 					: [
 							css.root,
-							...getSpacingClasses(widget.properties as SpacingProperties),
-							display ? getDisplayClass(widget.properties as DisplayProperties) : undefined,
+							...getSpacingClasses(this.properties as SpacingProperties),
+							display ? getDisplayClass(this.properties as DisplayProperties) : undefined,
 							...flexItemClasses,
-							...getTextClasses(widget.properties as TextProperties),
-							...getColorsClasses(widget.properties as ColorsProperties),
-							...getTextDecorationClass(widget.properties as TextProperties)
+							...getTextClasses(this.properties as TextProperties),
+							...getColorsClasses(this.properties as ColorsProperties),
+							...getTextDecorationClass(this.properties as TextProperties)
 						],
-				styles: getTextStyles(widget.properties as TextProperties)
+				styles: getTextStyles(this.properties as TextProperties)
 			},
 			children
 		);

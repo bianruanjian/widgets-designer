@@ -6,9 +6,7 @@ import { ButtonBase, sizeMap } from 'widgets-web/button/index';
 
 export default class Button extends DesignerWidgetMixin(ButtonBase) {
 	protected render(): VNode {
-		const { widget } = this.properties;
-
-		const { appearance, size, disabled, fluid, active, type, isListItem } = widget.properties;
+		const { appearance, size, disabled, fluid, active, type, isListItem } = this.properties;
 
 		const children: DNode[] = this.renderChildren();
 
