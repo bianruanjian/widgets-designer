@@ -1,16 +1,14 @@
 import { v } from '@dojo/widget-core/d';
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import * as css from './styles/Button.m.css';
-import { VNode } from '@dojo/widget-core/interfaces';
+import { VNode, DNode } from '@dojo/widget-core/interfaces';
 import { ButtonBase, sizeMap } from 'widgets-web/button/index';
 
 export default class Button extends DesignerWidgetMixin(ButtonBase) {
 	protected render(): VNode {
-		const { value, appearance, size, disabled, fluid, active, type, isListItem } = this.properties;
+		const { appearance, size, disabled, fluid, active, type, isListItem } = this.properties;
 
-		if (this.children.length === 0) {
-			this.children.push(value || '按钮');
-		}
+		const children: DNode[] = this.renderChildren();
 
 		// 需要添加遮盖层的部件是明确的，因此这里不需要传入是否显示遮盖层的参数。
 		return v(
@@ -41,7 +39,7 @@ export default class Button extends DesignerWidgetMixin(ButtonBase) {
 				disabled: disabled === true || disabled === 'true',
 				type
 			},
-			this.children
+			children
 		);
 	}
 }
