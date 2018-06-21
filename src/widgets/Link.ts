@@ -18,6 +18,8 @@ import {
 	getColorsClasses,
 	getTextStyles
 } from 'widgets-web/common/util';
+import * as css from './styles/Link.m.css';
+
 export default class Link extends DesignerWidgetMixin(LinkBase) {
 	protected render(): VNode {
 		const { widget } = this.properties;
@@ -49,6 +51,7 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 					? [
 							'list-group-item',
 							'list-group-item-action',
+							css.root,
 							...getSpacingClasses(widget.properties as SpacingProperties),
 							display ? getDisplayClass(widget.properties as DisplayProperties) : undefined,
 							...flexItemClasses,
@@ -57,6 +60,7 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 							...getTextDecorationClass(widget.properties as TextProperties)
 						]
 					: [
+							css.root,
 							...getSpacingClasses(widget.properties as SpacingProperties),
 							display ? getDisplayClass(widget.properties as DisplayProperties) : undefined,
 							...flexItemClasses,
@@ -64,12 +68,7 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 							...getColorsClasses(widget.properties as ColorsProperties),
 							...getTextDecorationClass(widget.properties as TextProperties)
 						],
-				styles: {
-					color: '#007bff',
-					textDecoration: 'underline',
-					backgroundColor: 'transparent',
-					...getTextStyles(widget.properties as TextProperties)
-				}
+				styles: getTextStyles(widget.properties as TextProperties)
 			},
 			children
 		);
