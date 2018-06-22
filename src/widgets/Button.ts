@@ -5,6 +5,10 @@ import { VNode, DNode } from '@dojo/widget-core/interfaces';
 import { ButtonBase, sizeMap } from 'widgets-web/button/index';
 
 export default class Button extends DesignerWidgetMixin(ButtonBase) {
+	protected getDefaultValue() {
+		return '__';
+	}
+
 	protected render(): VNode {
 		const { appearance, size, disabled, fluid, active, type, isListItem } = this.properties;
 

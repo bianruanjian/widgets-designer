@@ -21,14 +21,12 @@ import {
 import * as css from './styles/Link.m.css';
 
 export default class Link extends DesignerWidgetMixin(LinkBase) {
+	protected getDefaultValue() {
+		return '__';
+	}
+
 	protected render(): VNode {
 		let { value, valuePosition, isListItem = false, appearance, display } = this.properties;
-
-		let flexItemClasses: string[] = [];
-
-		if (display && (display === 'flex' || display === 'inlineFlex')) {
-			flexItemClasses = getFlexItemClasses(this.properties as FlexItemProperties);
-		}
 
 		let children: DNode[];
 
@@ -52,7 +50,7 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 							css.root,
 							...getSpacingClasses(this.properties as SpacingProperties),
 							display ? getDisplayClass(this.properties as DisplayProperties) : undefined,
-							...flexItemClasses,
+							...getFlexItemClasses(this.properties as FlexItemProperties),
 							...getTextClasses(this.properties as TextProperties),
 							appearance && appearance !== 'default' ? `list-group-item-${appearance}` : undefined,
 							...getTextDecorationClass(this.properties as TextProperties)
@@ -61,7 +59,7 @@ export default class Link extends DesignerWidgetMixin(LinkBase) {
 							css.root,
 							...getSpacingClasses(this.properties as SpacingProperties),
 							display ? getDisplayClass(this.properties as DisplayProperties) : undefined,
-							...flexItemClasses,
+							...getFlexItemClasses(this.properties as FlexItemProperties),
 							...getTextClasses(this.properties as TextProperties),
 							...getColorsClasses(this.properties as ColorsProperties),
 							...getTextDecorationClass(this.properties as TextProperties)

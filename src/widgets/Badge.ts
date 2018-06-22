@@ -5,6 +5,10 @@ import { v } from '@dojo/widget-core/d';
 import { getSpacingClasses } from 'widgets-web/common/util';
 
 export default class Badge extends DesignerWidgetMixin(BadgeBase) {
+	protected getDefaultValue() {
+		return '__';
+	}
+
 	// 这里设置 href 后没有使用 a 标签，因为
 	// 如果使用 a 按钮，则需要在上面添加遮盖层，以屏蔽默认事件，但这样就无法选中子节点了
 	// a -> span
