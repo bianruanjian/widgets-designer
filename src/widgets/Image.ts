@@ -6,24 +6,34 @@ import { getBorderClasses, getSpacingClasses } from 'widgets-web/common/util';
 import * as css from './styles/Image.m.css';
 
 export default class Image extends DesignerWidgetMixin(ImageBase) {
-    protected render(): DNode | DNode[] {
+	protected render(): DNode | DNode[] {
 		let { src } = this.properties;
 
-		if(!src || src === ''){
-			return v('div', {
+		if (!src || src === '') {
+			return this._renderDefaultImage();
+		}
+
+		return super.render();
+	}
+
+	private _renderDefaultImage() {
+		return v(
+			'div',
+			{
 				key: this.getKey(),
 				classes: [
 					...this.getImgClasses(),
 					...getBorderClasses(this.properties),
 					...getSpacingClasses(this.properties),
-                    'd-flex',
-                    'justify-content-center',
-                    css.svgContainer
+					'd-flex',
+					'justify-content-center',
+					css.svgContainer
 				],
 				styles: {
 					...this.getImgStyles()
 				}
-			}, [
+			},
+			[
 				v(
 					'svg',
 					{
@@ -35,9 +45,7 @@ export default class Image extends DesignerWidgetMixin(ImageBase) {
 						})
 					]
 				)
-			]);
-		}
-
-		return super.render();
+			]
+		);
 	}
 }
