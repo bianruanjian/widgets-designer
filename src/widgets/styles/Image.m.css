@@ -1,0 +1,9 @@
+.svgContainer{
+    background-color: #e9ecef;
+}
+
+.defaultSvg{
+    fill: #6c757d;
+    width: 1.5em;
+    height: 1.5em;
+}
