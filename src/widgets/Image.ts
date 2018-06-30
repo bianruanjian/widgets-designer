@@ -25,7 +25,7 @@ export default class Image extends DesignerWidgetMixin(ImageBase) {
 					...this.getImgClasses(),
 					...getBorderClasses(this.properties),
 					...getSpacingClasses(this.properties),
-					'd-flex',
+					'd-inline-flex',
 					'justify-content-center',
 					css.svgContainer
 				],
