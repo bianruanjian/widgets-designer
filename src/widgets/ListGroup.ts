@@ -7,7 +7,7 @@ export default class ListGroup extends DesignerWidgetMixin(ListGroupBase) {
 	}
 
 	protected renderChildren(): DNode[] {
-		const orientation = this.properties.orientation;
+		const { orientation } = this.properties;
 		this.children.forEach((child, index) => {
 			if (child) {
 				const childNode = child as VNode;
