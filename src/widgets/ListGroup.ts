@@ -1,9 +1,23 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { ListGroupBase } from 'widgets-web/list-group';
-import { VNode } from '@dojo/widget-core/interfaces';
+import { VNode, DNode } from '@dojo/widget-core/interfaces';
 export default class ListGroup extends DesignerWidgetMixin(ListGroupBase) {
 	protected isContainer() {
 		return true;
+	}
+
+	protected renderChildren(): DNode[] {
+		this.children.forEach((child, index) => {
+			if (child) {
+				const childNode = child as VNode;
+				const childName = childNode.properties.widget.widgetName;
+
+				if (childName === 'ListItem') {
+					childNode.properties.widget.properties.orientation = 'horizontal';
+				}
+			}
+		});
+		return this.children;
 	}
 
 	protected getTagNameByChildNode(): string {
