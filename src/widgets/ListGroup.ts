@@ -10,10 +10,10 @@ export default class ListGroup extends DesignerWidgetMixin(ListGroupBase) {
 		this.children.forEach((child, index) => {
 			if (child) {
 				const childNode = child as VNode;
-				const childName = childNode.properties.widget.widgetName;
+				const childWidgetName = childNode.properties.widget.widgetName;
 
-				if (childName === 'ListItem') {
-					childNode.properties.widget.properties.orientation = 'horizontal';
+				if (childWidgetName === 'ListItem') {
+					childNode.properties.widget.properties.orientation = this.properties.orientation;
 				}
 			}
 		});
