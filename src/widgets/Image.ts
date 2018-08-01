@@ -1,7 +1,7 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { ImageBase } from 'widgets-web/image';
-import { DNode } from '@dojo/widget-core/interfaces';
-import { v } from '@dojo/widget-core/d';
+import { DNode } from '@dojo/framework/widget-core/interfaces';
+import { v } from '@dojo/framework/widget-core/d';
 import { getBorderClasses, getSpacingClasses } from 'widgets-web/common/util';
 import * as css from './styles/Image.m.css';
 

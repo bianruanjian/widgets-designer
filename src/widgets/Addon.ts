@@ -1,6 +1,6 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { AddonBase } from 'widgets-web/addon';
-import { VNode } from '@dojo/widget-core/interfaces';
+import { VNode } from '@dojo/framework/widget-core/interfaces';
 export default class Addon extends DesignerWidgetMixin(AddonBase) {
 	protected getDefaultValue() {
 		return '__';

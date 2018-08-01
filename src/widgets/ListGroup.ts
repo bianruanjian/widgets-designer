@@ -1,6 +1,6 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { ListGroupBase } from 'widgets-web/list-group';
-import { VNode } from '@dojo/widget-core/interfaces';
+import { VNode } from '@dojo/framework/widget-core/interfaces';
 export default class ListGroup extends DesignerWidgetMixin(ListGroupBase) {
 	protected isContainer() {
 		return true;
