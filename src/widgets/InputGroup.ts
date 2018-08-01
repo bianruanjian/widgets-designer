@@ -1,6 +1,6 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { InputGroupBase } from 'widgets-web/input-group';
-import { VNode } from '@dojo/widget-core/interfaces';
+import { VNode } from '@dojo/framework/widget-core/interfaces';
 export default class InputGroup extends DesignerWidgetMixin(InputGroupBase) {
 	protected isContainer() {
 		return true;

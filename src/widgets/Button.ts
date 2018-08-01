@@ -1,7 +1,7 @@
-import { v } from '@dojo/widget-core/d';
+import { v } from '@dojo/framework/widget-core/d';
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import * as css from './styles/Button.m.css';
-import { VNode, DNode } from '@dojo/widget-core/interfaces';
+import { VNode, DNode } from '@dojo/framework/widget-core/interfaces';
 import { ButtonBase, sizeMap } from 'widgets-web/button/index';
 
 export default class Button extends DesignerWidgetMixin(ButtonBase) {

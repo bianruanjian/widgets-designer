@@ -1,7 +1,7 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { BadgeBase } from 'widgets-web/badge';
-import { DNode } from '@dojo/widget-core/interfaces';
-import { v } from '@dojo/widget-core/d';
+import { DNode } from '@dojo/framework/widget-core/interfaces';
+import { v } from '@dojo/framework/widget-core/d';
 import { getSpacingClasses } from 'widgets-web/common/util';
 
 export default class Badge extends DesignerWidgetMixin(BadgeBase) {
