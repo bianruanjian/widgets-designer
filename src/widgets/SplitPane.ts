@@ -1,11 +1,10 @@
 import { DesignerWidgetMixin } from 'widget-core-designer/DesignerWidgetMixin';
-import { SplitPaneWidgetBase } from 'widgets-web/split-pane/index';
 import { DNode } from '@dojo/framework/widget-core/interfaces';
 import { v, w } from '@dojo/framework/widget-core/d';
 import * as css from 'widgets-web/split-pane/styles/split-pane.m.css';
-import { SplitPaneProperties } from '@dojo/widgets/split-pane';
+import { SplitPaneProperties, SplitPaneBase } from '@dojo/widgets/split-pane';
 
-export default class SplitPane extends DesignerWidgetMixin(SplitPaneWidgetBase) {
+export default class SplitPane extends DesignerWidgetMixin(SplitPaneBase) {
 	protected isContainer() {
 		return true;
 	}
@@ -14,12 +13,12 @@ export default class SplitPane extends DesignerWidgetMixin(SplitPaneWidgetBase) 
 		return v(
 			'div',
 			{
-				key: this.getKey(),
+				key: 'split-pane',
 				classes: css.root
 			},
 			[
 				w(
-					SplitPaneWidgetBase,
+					SplitPaneBase,
 					{
 						...(this.properties as SplitPaneProperties)
 					},
