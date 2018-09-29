@@ -216,8 +216,25 @@ export default class TabController extends DesignerWidgetMixin(TabControllerBase
 		onFocus && onFocus({ activeWidgetDimensions: dimensions, activeWidgetId: activeWidgetId });
 	}
 
+	private _computeActiveIndex(currentTabKeys: string[]) {
+		const { activeWidgetId } = this.properties;
+		let newActiveIndex = 0;
+		for (let i = 0; i < this._tabKeysFromTabs.length; i++) {
+			if (this._tabKeysFromTabs[i] !== currentTabKeys[i]) {
+				for (let j = i; j < currentTabKeys.length; j++) {
+					if (endsWith(currentTabKeys[j], activeWidgetId as string)) {
+						newActiveIndex = j;
+						break;
+					}
+				}
+				break;
+			}
+		}
+		return newActiveIndex;
+	}
+
 	render(): DNode {
-		const { activeIndex = -1, activeWidgetId } = this.properties;
+		const { activeIndex = -1 } = this.properties;
 
 		if (this._activeIndexFromProperties !== activeIndex) {
 			this._activeIndexFromProperties = activeIndex;
@@ -232,17 +249,11 @@ export default class TabController extends DesignerWidgetMixin(TabControllerBase
 		if (this._tabKeysFromTabs.length !== currentTabKeys.length) {
 			this._tabKeysFromTabs = currentTabKeys;
 		} else {
-			for (let i = 0; i < this._tabKeysFromTabs.length; i++) {
-				if (this._tabKeysFromTabs[i] !== currentTabKeys[i]) {
-					for (let j = i; j < currentTabKeys.length; j++) {
-						if (endsWith(currentTabKeys[j], activeWidgetId as string)) {
-							this._activeIndex = j;
-							break;
-						}
-					}
-					this._tabKeysFromTabs = currentTabKeys;
-					break;
-				}
+			// 如果出现前移或后移 tab 时，需要重新计算 activeIndex
+			const newActiveIndex = this._computeActiveIndex(currentTabKeys);
+			if (newActiveIndex && newActiveIndex != this._activeIndex) {
+				this._activeIndex = newActiveIndex;
+				this._tabKeysFromTabs = currentTabKeys;
 			}
 		}
 
