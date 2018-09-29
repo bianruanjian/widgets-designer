@@ -27,7 +27,9 @@ export class TabControllerBase extends DojoTabControllerBase<TabControllerProper
 	private callTabFocus = false;
 
 	protected get tabs(): WNode<Tab>[] {
-		return this.children.filter((child) => child !== null) as WNode<Tab>[];
+		return this.children.filter(
+			(child) => child !== null && (child.properties as any).widget.widgetName === 'Tab'
+		) as WNode<Tab>[];
 	}
 
 	// 覆写该方法，删除 TabButton 设置为 disabled, 自动切换到下一个有效的 Tab 的逻辑
