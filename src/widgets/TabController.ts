@@ -218,7 +218,7 @@ export default class TabController extends DesignerWidgetMixin(TabControllerBase
 
 	private _computeActiveIndex(currentTabKeys: string[]) {
 		const { activeWidgetId } = this.properties;
-		let newActiveIndex = 0;
+		let newActiveIndex: number = -1;
 		for (let i = 0; i < this._tabKeysFromTabs.length; i++) {
 			if (this._tabKeysFromTabs[i] !== currentTabKeys[i]) {
 				for (let j = i; j < currentTabKeys.length; j++) {
@@ -251,7 +251,7 @@ export default class TabController extends DesignerWidgetMixin(TabControllerBase
 		} else {
 			// 如果出现前移或后移 tab 时，需要重新计算 activeIndex
 			const newActiveIndex = this._computeActiveIndex(currentTabKeys);
-			if (newActiveIndex && newActiveIndex != this._activeIndex) {
+			if (newActiveIndex !== -1 && newActiveIndex != this._activeIndex) {
 				this._activeIndex = newActiveIndex;
 				this._tabKeysFromTabs = currentTabKeys;
 			}
