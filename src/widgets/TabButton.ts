@@ -7,7 +7,7 @@ import { v } from '@dojo/framework/widget-core/d';
 import * as css from '@dojo/widgets/theme/tab-controller.m.css';
 
 export default class TabButton extends TabButtonBase {
-	// 复写方法，以支持设置为 disabled 的 TabButton 也能被选中
+	// 覆写方法，以支持设置为 disabled 的 TabButton 也能被选中
 	protected onClick(event: MouseEvent) {
 		event.stopPropagation();
 		const { index, onClick } = this.properties;
@@ -15,7 +15,7 @@ export default class TabButton extends TabButtonBase {
 		onClick && onClick(index);
 	}
 
-	// 复写该方法，以支持设置为 disabled 的 TabButton 也能被切换控件时操作到
+	// 覆写该方法，支持键盘操作也能应用到被设置为 disabled 的 TabButton 上
 	protected onKeyDown(event: KeyboardEvent) {
 		event.stopPropagation();
 		const {

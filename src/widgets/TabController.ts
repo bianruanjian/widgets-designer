@@ -4,20 +4,25 @@ import Tab from './Tab';
 import { Dimensions } from '@dojo/framework/widget-core/meta/Dimensions';
 import { Resize } from '@dojo/framework/widget-core/meta/Resize';
 import { v, w } from '@dojo/framework/widget-core/d';
-import { TabControllerBase, TabControllerProperties, Align } from '@dojo/widgets/tab-controller/index';
+import {
+	TabControllerBase as DojoTabControllerBase,
+	TabControllerProperties as DojoTabControllerProperties,
+	Align
+} from '@dojo/widgets/tab-controller/index';
 import * as css from '@dojo/widgets/theme/tab-controller.m.css';
 import { formatAriaProperties } from '@dojo/widgets/common/util';
 import { TabProperties } from '@dojo/widgets/tab';
 import uuid from '@dojo/framework/core/uuid';
 import { assign } from '@dojo/framework/shim/object';
 import TabButton from './TabButton';
+import { endsWith } from '@dojo/framework/shim/string';
 
-export interface TabControllerDesignerProperties extends TabControllerProperties {
+export interface TabControllerProperties extends DojoTabControllerProperties {
 	// 暴露出 TabButton 的 onclick 事件
 	onRequestTabClick?(index: number, key: string): void;
 }
 
-export class TabControllerDesignerBase extends TabControllerBase<TabControllerDesignerProperties> {
+export class TabControllerBase extends DojoTabControllerBase<TabControllerProperties> {
 	private id = uuid();
 	private callTabFocus = false;
 
@@ -25,8 +30,8 @@ export class TabControllerDesignerBase extends TabControllerBase<TabControllerDe
 		return this.children.filter((child) => child !== null) as WNode<Tab>[];
 	}
 
-	// 复写该方法，删除 TabButton 设置为 disabled, 自动切换到下一个有效的 Tab 的逻辑
-	private validateIndex(currentIndex: number, backwards?: boolean) {
+	// 覆写该方法，删除 TabButton 设置为 disabled, 自动切换到下一个有效的 Tab 的逻辑
+	protected validateIndex(currentIndex: number, backwards?: boolean) {
 		const tabs = this.tabs;
 		if (tabs.every((result) => Boolean(result.properties.disabled))) {
 			return null;
@@ -35,7 +40,7 @@ export class TabControllerDesignerBase extends TabControllerBase<TabControllerDe
 		return i;
 	}
 
-	// 复写该方法，以支持选择 Tab 时触发点击事件
+	// 覆写该方法，以支持选择 Tab 时触发点击事件
 	protected selectIndex(index: number, backwards?: boolean) {
 		const { onRequestTabClick } = this.properties;
 		this.callTabFocus = true;
@@ -184,7 +189,7 @@ export class TabControllerDesignerBase extends TabControllerBase<TabControllerDe
 	}
 }
 
-export default class TabController extends DesignerWidgetMixin(TabControllerDesignerBase) {
+export default class TabController extends DesignerWidgetMixin(TabControllerBase) {
 	protected isContainer() {
 		return true;
 	}
@@ -230,7 +235,7 @@ export default class TabController extends DesignerWidgetMixin(TabControllerDesi
 			for (let i = 0; i < this._tabKeysFromTabs.length; i++) {
 				if (this._tabKeysFromTabs[i] !== currentTabKeys[i]) {
 					for (let j = i; j < currentTabKeys.length; j++) {
-						if (currentTabKeys[j].indexOf(activeWidgetId as string) > -1) {
+						if (endsWith(currentTabKeys[j], activeWidgetId as string)) {
 							this._activeIndex = j;
 							break;
 						}
@@ -241,6 +246,11 @@ export default class TabController extends DesignerWidgetMixin(TabControllerDesi
 			}
 		}
 
+		// 删除一个 tab 后，如果 activeIndex 超出了索引，则要调整 activeIndex 的值
+		if (this._activeIndex && this._activeIndex >= this.tabs.length) {
+			this._activeIndex = this.tabs.length - 1;
+		}
+
 		return v(
 			'div',
 			{
@@ -248,9 +258,9 @@ export default class TabController extends DesignerWidgetMixin(TabControllerDesi
 			},
 			[
 				w(
-					TabControllerDesignerBase,
+					TabControllerBase,
 					{
-						...(this.properties as TabControllerDesignerProperties),
+						...(this.properties as TabControllerProperties),
 						activeIndex: this._activeIndex,
 						onRequestTabClick: this._requestTabClick
 					},
