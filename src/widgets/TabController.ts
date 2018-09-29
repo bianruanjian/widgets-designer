@@ -27,7 +27,11 @@ export class TabControllerBase extends DojoTabControllerBase<TabControllerProper
 	private callTabFocus = false;
 
 	protected get tabs(): WNode<Tab>[] {
-		return this.children.filter((child) => child !== null) as WNode<Tab>[];
+		// 只能渲染 Tab 子部件，不允许将其他部件当成 Tab 子部件渲染
+		// 这样就能解决将 Cursor 部件当成 Tab 部件渲染的问题了
+		return this.children.filter(
+			(child) => child !== null && (child.properties as any).widget.widgetName === 'Tab'
+		) as WNode<Tab>[];
 	}
 
 	// 覆写该方法，删除 TabButton 设置为 disabled, 自动切换到下一个有效的 Tab 的逻辑
