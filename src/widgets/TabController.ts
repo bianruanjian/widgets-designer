@@ -5,99 +5,12 @@ import { Dimensions } from '@dojo/framework/widget-core/meta/Dimensions';
 import { Resize } from '@dojo/framework/widget-core/meta/Resize';
 import { v, w } from '@dojo/framework/widget-core/d';
 import { TabControllerBase, TabControllerProperties, Align } from '@dojo/widgets/tab-controller/index';
-import { TabButtonBase } from '@dojo/widgets/tab-controller/TabButton';
-import commonBundle from '@dojo/widgets/common/nls/common';
-import Focus from '@dojo/framework/widget-core/meta/Focus';
 import * as css from '@dojo/widgets/theme/tab-controller.m.css';
-import { Keys, formatAriaProperties } from '@dojo/widgets/common/util';
+import { formatAriaProperties } from '@dojo/widgets/common/util';
 import { TabProperties } from '@dojo/widgets/tab';
 import uuid from '@dojo/framework/core/uuid';
 import { assign } from '@dojo/framework/shim/object';
-
-export class TabButtonDesignerBase extends TabButtonBase {
-	// 复写方法，以支持设置为 disabled 的 TabButton 也能被选中
-	protected onClick(event: MouseEvent) {
-		event.stopPropagation();
-		const { index, onClick } = this.properties;
-
-		onClick && onClick(index);
-	}
-
-	// 复写该方法，以支持设置为 disabled 的 TabButton 也能被切换控件时操作到
-	protected onKeyDown(event: KeyboardEvent) {
-		event.stopPropagation();
-		const {
-			closeable,
-			index,
-			onCloseClick,
-			onDownArrowPress,
-			onEndPress,
-			onHomePress,
-			onLeftArrowPress,
-			onRightArrowPress,
-			onUpArrowPress
-		} = this.properties;
-
-		// Accessibility
-		switch (event.which) {
-			// Escape
-			case Keys.Escape:
-				closeable && onCloseClick && onCloseClick(index);
-				break;
-			// Left arrow
-			case Keys.Left:
-				onLeftArrowPress && onLeftArrowPress();
-				break;
-			// Right arrow
-			case Keys.Right:
-				onRightArrowPress && onRightArrowPress();
-				break;
-			// Up arrow
-			case Keys.Up:
-				onUpArrowPress && onUpArrowPress();
-				break;
-			// Down arrow
-			case Keys.Down:
-				onDownArrowPress && onDownArrowPress();
-				break;
-			// Home
-			case Keys.Home:
-				onHomePress && onHomePress();
-				break;
-			// End
-			case Keys.End:
-				onEndPress && onEndPress();
-				break;
-		}
-	}
-
-	render(): DNode {
-		const { active, callFocus, controls, disabled, id, onFocusCalled } = this.properties;
-		const { messages } = this.localizeBundle(commonBundle);
-
-		if (callFocus) {
-			this.meta(Focus).set('tab-button');
-			onFocusCalled && onFocusCalled();
-		}
-
-		return v(
-			'div',
-			{
-				'aria-controls': controls,
-				'aria-disabled': disabled ? 'true' : 'false',
-				'aria-selected': active === true ? 'true' : 'false',
-				classes: this.theme([css.tabButton, ...this.getModifierClasses()]),
-				id,
-				key: 'tab-button',
-				onclick: this.onClick,
-				onkeydown: this.onKeyDown,
-				role: 'tab',
-				tabIndex: active === true ? 0 : -1
-			},
-			this.getContent(messages)
-		);
-	}
-}
+import TabButton from './TabButton';
 
 export interface TabControllerDesignerProperties extends TabControllerProperties {
 	// 暴露出 TabButton 的 onclick 事件
@@ -167,7 +80,7 @@ export class TabControllerDesignerBase extends TabControllerBase<TabControllerDe
 			const { closeable, disabled, key, label, theme } = <TabProperties>tab.properties;
 
 			return w(
-				TabButtonDesignerBase,
+				TabButton,
 				{
 					callFocus: this.callTabFocus && i === this.properties.activeIndex,
 					active: i === this.properties.activeIndex,
@@ -285,6 +198,9 @@ export default class TabController extends DesignerWidgetMixin(TabControllerDesi
 	// 所以如果通过 this.properties 修改了 _activeIndexFromProperties 后也要同步修改此变量。
 	private _activeIndex: number = 0;
 
+	// 通过 this.tabs 传入的 Tab key 数组会赋给该变量。
+	private _tabKeysFromTabs: string[] = [];
+
 	// 触发设计器版的 onFocus 事件
 	protected _requestTabClick(index: number, key: string) {
 		this._activeIndex = index;
@@ -296,11 +212,33 @@ export default class TabController extends DesignerWidgetMixin(TabControllerDesi
 	}
 
 	render(): DNode {
-		const { activeIndex = -1 } = this.properties;
+		const { activeIndex = -1, activeWidgetId } = this.properties;
 
 		if (this._activeIndexFromProperties !== activeIndex) {
 			this._activeIndexFromProperties = activeIndex;
 			this._activeIndex = activeIndex;
+		}
+
+		// 如果 TabController 中的子部件 Tab 被左移或者右移后，activeIndex 需要重新切换到 activeWidgetId 对应的 Tab 页上
+		let currentTabKeys: string[] = [];
+		this.tabs.forEach((tab, index) => {
+			currentTabKeys.push(tab.properties.key);
+		});
+		if (this._tabKeysFromTabs.length !== currentTabKeys.length) {
+			this._tabKeysFromTabs = currentTabKeys;
+		} else {
+			for (let i = 0; i < this._tabKeysFromTabs.length; i++) {
+				if (this._tabKeysFromTabs[i] !== currentTabKeys[i]) {
+					for (let j = i; j < currentTabKeys.length; j++) {
+						if (currentTabKeys[j].indexOf(activeWidgetId as string) > -1) {
+							this._activeIndex = j;
+							break;
+						}
+					}
+					this._tabKeysFromTabs = currentTabKeys;
+					break;
+				}
+			}
 		}
 
 		return v(
