@@ -27,6 +27,8 @@ export class TabControllerBase extends DojoTabControllerBase<TabControllerProper
 	private callTabFocus = false;
 
 	protected get tabs(): WNode<Tab>[] {
+		// 只能渲染 Tab 子部件，不允许将其他部件当成 Tab 子部件渲染
+		// 这样就能解决将 Cursor 部件当成 Tab 部件渲染的问题了
 		return this.children.filter(
 			(child) => child !== null && (child.properties as any).widget.widgetName === 'Tab'
 		) as WNode<Tab>[];
