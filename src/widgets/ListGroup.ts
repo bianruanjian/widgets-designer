@@ -1,6 +1,5 @@
 import DesignerWidgetMixin from 'widget-core-designer/DesignerWidgetMixin';
 import { ListGroupBase } from 'widgets-web/list-group';
-import { VNode } from '@dojo/framework/widget-core/interfaces';
 export default class ListGroup extends DesignerWidgetMixin(ListGroupBase) {
 	protected isContainer() {
 		return true;
@@ -12,8 +11,7 @@ export default class ListGroup extends DesignerWidgetMixin(ListGroupBase) {
 		let existButtonOrLink: boolean = false;
 		this.children.forEach((child, index) => {
 			if (child) {
-				const childNode = child as VNode;
-				const childName = childNode.properties.widget.widgetName;
+				const childName = (child.properties as any).widget.widgetName;
 
 				if (childName === 'Link' || childName === 'Button') {
 					tag = 'div';
