@@ -12,7 +12,7 @@ import {
 import * as css from '@dojo/widgets/theme/tab-controller.m.css';
 import { formatAriaProperties } from '@dojo/widgets/common/util';
 import { TabProperties } from '@dojo/widgets/tab';
-import uuid from '@dojo/framework/core/uuid';
+import { uuid } from '@dojo/framework/core/util';
 import { assign } from '@dojo/framework/shim/object';
 import TabButton from './TabButton';
 import { endsWith } from '@dojo/framework/shim/string';
@@ -24,7 +24,6 @@ export interface TabControllerProperties extends DojoTabControllerProperties {
 
 export class TabControllerBase extends DojoTabControllerBase<TabControllerProperties> {
 	private id = uuid();
-	private callTabFocus = false;
 
 	protected get tabs(): WNode<Tab>[] {
 		// 只能渲染 Tab 子部件，不允许将其他部件当成 Tab 子部件渲染
@@ -47,7 +46,6 @@ export class TabControllerBase extends DojoTabControllerBase<TabControllerProper
 	// 覆写该方法，以支持选择 Tab 时触发点击事件
 	protected selectIndex(index: number, backwards?: boolean) {
 		const { onRequestTabClick } = this.properties;
-		this.callTabFocus = true;
 		const key = this.tabs[index].properties.key;
 		onRequestTabClick && onRequestTabClick(index, key);
 	}
@@ -55,7 +53,6 @@ export class TabControllerBase extends DojoTabControllerBase<TabControllerProper
 	protected closeIndex(index: number) {
 		const { onRequestTabClose } = this.properties;
 		const key = this.tabs[index].properties.key;
-		this.callTabFocus = true;
 
 		onRequestTabClose && onRequestTabClose(index, key);
 	}
@@ -91,11 +88,11 @@ export class TabControllerBase extends DojoTabControllerBase<TabControllerProper
 			return w(
 				TabButton,
 				{
-					callFocus: this.callTabFocus && i === this.properties.activeIndex,
 					active: i === this.properties.activeIndex,
 					closeable,
 					controls: `${this.id}-tab-${i}`,
 					disabled,
+					focus: i === this.properties.activeIndex ? this.shouldFocus : () => false,
 					id: `${this.id}-tabbutton-${i}`,
 					index: i,
 					key: `${key}-tabbutton`,
@@ -103,9 +100,6 @@ export class TabControllerBase extends DojoTabControllerBase<TabControllerProper
 					onCloseClick: this.closeIndex,
 					onDownArrowPress: this.onDownArrowPress,
 					onEndPress: this.selectLastIndex,
-					onFocusCalled: () => {
-						this.callTabFocus = false;
-					},
 					onHomePress: this.selectFirstIndex,
 					onLeftArrowPress: this.onLeftArrowPress,
 					onRightArrowPress: this.onRightArrowPress,
