@@ -1,6 +1,5 @@
 import { TabButtonBase } from '@dojo/widgets/tab-controller/TabButton';
 import commonBundle from '@dojo/widgets/common/nls/common';
-import Focus from '@dojo/framework/widget-core/meta/Focus';
 import { Keys } from '@dojo/widgets/common/util';
 import { DNode } from '@dojo/framework/widget-core/interfaces';
 import { v } from '@dojo/framework/widget-core/d';
@@ -64,13 +63,8 @@ export default class TabButton extends TabButtonBase {
 	}
 
 	render(): DNode {
-		const { active, callFocus, controls, disabled, id, onFocusCalled } = this.properties;
+		const { active, controls, disabled, id } = this.properties;
 		const { messages } = this.localizeBundle(commonBundle);
-
-		if (callFocus) {
-			this.meta(Focus).set('tab-button');
-			onFocusCalled && onFocusCalled();
-		}
 
 		return v(
 			'div',
@@ -79,6 +73,7 @@ export default class TabButton extends TabButtonBase {
 				'aria-disabled': disabled ? 'true' : 'false',
 				'aria-selected': active === true ? 'true' : 'false',
 				classes: this.theme([css.tabButton, ...this.getModifierClasses()]),
+				focus: this.shouldFocus,
 				id,
 				key: 'tab-button',
 				onclick: this.onClick,
